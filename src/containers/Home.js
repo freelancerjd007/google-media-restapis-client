@@ -1,34 +1,12 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { createAuthLink, getNewAccessToken } from "apis/googleAuthApis";
+import { createAuthLink } from "apis/googleAuthApis";
 import { getMediaItems } from "apis/googlePhotosApi";
-import { tokenExpired } from "utils";
 
 export const Home = (props) => {
-  const {
-    createAuthLink,
-    authLinkData,
-    getMediaItems,
-    mediaItemsData,
-    getNewAccessToken,
-    newAccessToken,
-  } = props;
-
-  const handleGetGooglePhotos = () => {
-    if (tokenExpired()) {
-      getNewAccessToken();
-    } else {
-      getMediaItems();
-    }
-  };
+  const { createAuthLink, authLinkData, getMediaItems, mediaItemsData } = props;
 
   console.log(mediaItemsData);
-
-  useEffect(() => {
-    if (newAccessToken.accessToken) {
-      getMediaItems();
-    }
-  }, [newAccessToken.accessToken]);
 
   useEffect(() => {
     if (authLinkData.url) {
@@ -38,13 +16,12 @@ export const Home = (props) => {
   return (
     <div className="homeContainer">
       <h1>Google</h1>
-      <button onClick={handleGetGooglePhotos} className="getGooglePhotosBtn">
-        Get My Google Photos{" "}
-        {mediaItemsData.loading || newAccessToken.loading ? "Loading..." : ""}
+      <button onClick={() => getMediaItems()} className="getGooglePhotosBtn">
+        Get My Google Photos {mediaItemsData.loading ? "Loading..." : ""}
       </button>
       {/* <button onClick={() => createAuthLink()}>
-          Login {authLinkData.loading ? "Loading..." : ""}
-        </button> */}
+        Login {authLinkData.loading ? "Loading..." : ""}
+      </button> */}
       <div className="imageContainer">
         {mediaItemsData?.data?.map((item, index) => {
           return <img key={index} src={item?.baseUrl} alt="" />;
@@ -55,18 +32,16 @@ export const Home = (props) => {
 };
 
 const mapStateToProps = ({
-  googleAuthData: { authLinkData, newAccessToken },
+  googleAuthData: { authLinkData },
   googlePhotosData: { mediaItemsData },
 }) => ({
   authLinkData,
   mediaItemsData,
-  newAccessToken,
 });
 
 const mapDispatchToProps = {
   createAuthLink,
   getMediaItems,
-  getNewAccessToken,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
