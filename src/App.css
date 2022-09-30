@@ -1,4 +1,25 @@
-.photos{
+.homeContainer{
+    padding: 20px;
+}
+
+.getGooglePhotosBtn{
+    cursor: pointer;
+    padding: 6px 16px;
+    border: none;
+    box-shadow: 1px 3px 5px rgba(0,0,0,0.35);
+    background-color: #1976d2;
+    transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
+    color: #fff;
+    font-weight: 500;
+    font-size: 0.875rem;
+    line-height: 1.75;
+    border-radius: 4px;
+    text-transform: capitalize;
+    letter-spacing: 0.02857em;
+}
+
+.imageContainer{
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -6,8 +27,9 @@
     margin-top: 20px;
 }
 
-.photos img{
-    width: 300px;
-    height: 300px;
+.imageContainer img{
+    width: 250px;
+    height: 250px;
     margin: 0 15px 15px 0;
+    object-fit: cover;
 }
